@@ -20,4 +20,4 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 
 Route::get('/github/user/info', [GitHubUserController::class, 'getInfoByUsername'])
-    ->name('retrieveUsers');
+    ->name('github');
