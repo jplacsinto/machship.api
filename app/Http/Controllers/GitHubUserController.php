@@ -14,6 +14,8 @@ class GitHubUserController extends Controller
 
         if (!empty($usernames)) {
             $usernames = explode(',', $usernames);
+            $usernames = array_unique($usernames);
+            sort($usernames);
 
             foreach ($usernames as $username) {
                 $response = Http::get("https://api.github.com/users/$username");
@@ -28,8 +30,6 @@ class GitHubUserController extends Controller
                         'average_public_repo_followers' => $user['followers'] / $user['public_repos']
                     ];
                     $results[] = $userInfo;
-                } else {
-                    $results[] = ['error' => 'User not found'];
                 }
             }
         }
