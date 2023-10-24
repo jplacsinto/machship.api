@@ -15,7 +15,6 @@ class GitHubUserController extends Controller
         if (!empty($usernames) && is_string($usernames)) {
             $usernames = explode(',', $usernames);
             $usernames = array_unique($usernames);
-            sort($usernames);
 
             foreach ($usernames as $username) {
                 try {
@@ -43,6 +42,13 @@ class GitHubUserController extends Controller
             }
         }
 
-        return response()->json($results);
+        $responseArr = $results;
+        if(!empty($responseArr)) {
+            $collection = collect($responseArr);
+            $sortedCollection = $collection->sortBy('name');
+            $responseArr = $sortedCollection->values()->all();
+        }
+        
+        return response()->json($responseArr);
     }
 }
